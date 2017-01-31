@@ -1,0 +1,195 @@
+/*
+ * The MIT License
+ *
+ * Copyright 2016 Eka Putra <ekaputtra at gmail.com>.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+html {
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    position: relative;
+    min-height: 100%;
+}
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+    padding-top: 70px;
+    padding-bottom: 30px;
+    background-image: url(../images/background.jpg);
+}
+
+a,
+a:active,
+a:hover {
+    text-decoration: none;
+}
+
+.navbar {
+    background-color: #337ab7;
+    border-color: #337ab7;
+}
+
+.navbar-inverse .navbar-brand,
+.navbar-inverse .navbar-nav > li > a {
+    color: #fff;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li.aktif,
+.navbar-inverse .navbar-toggle:hover,
+.navbar-inverse .navbar-toggle:focus {
+    background-color: #286090;
+}
+
+.navbar-inverse .navbar-toggle {
+    border-color: #337ab7;
+}
+
+.navbar-inverse .navbar-collapse,
+.navbar-inverse .navbar-form {
+    border-color: #286090;
+}
+
+.badge {
+    background-color: #d9534f;
+}
+
+.signup {
+    max-width: 400px;
+    margin-top: 70px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.alert-max {
+    max-width: 600px;
+}
+
+.post {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+
+.konten {
+    max-width: 600px;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.kepala {
+    padding-bottom: 10px;
+}
+
+.iduser {
+    color: #7a7a7a;
+}
+
+.user-action {
+    float: right;
+}
+
+.komentar {
+    border-color: #e0e0e0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.daftar-komentar {
+    border-top: 1px solid;
+    border-color: #e0e0e0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+}
+
+.post-komentar {
+    border-top: 1px solid;
+    border-color: #e0e0e0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    margin-bottom: 20px;
+}
+
+.badge-notif-lg,
+.badge-notif-xs {
+        position:relative;
+}
+
+.badge-notif-lg[data-badge]:after {
+        content:attr(data-badge);
+        position:absolute;
+        top:-11px;
+        right:-11px;
+        font-family: "Open Sans", sans-serif;
+        font-size:.7em;
+        font-weight: bold;
+        background:#d9534f;
+        color:white;
+        width:18px;
+        height:18px;
+        text-align:center;
+        line-height:18px;
+        border-radius: 50%;
+}
+
+.badge-notif-xs[data-badge]:after {
+        content:attr(data-badge);
+        position:absolute;
+        top:-1px;
+        right:-1px;
+        font-family: "Open Sans", sans-serif;
+        font-size:.7em;
+        font-weight: bold;
+        background:#d9534f;
+        color:white;
+        width:18px;
+        height:18px;
+        text-align:center;
+        line-height:18px;
+        border-radius: 50%;
+}
+
+.footer {
+    position: absolute;
+    height: 41px;
+    color: #7a7a7a;
+    padding: 10px;
+    bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: normal;
+    min-width: 100%;
+    text-align: center;
+}
