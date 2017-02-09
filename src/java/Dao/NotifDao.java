@@ -41,8 +41,8 @@ import java.util.List;
 public class NotifDao {
     private Connection koneksi = new Koneksi().getKoneksi();
     private final String addNotif = "INSERT INTO "
-                                  + "notif(idpost, pengirim, penerima, baca, waktu, pemilik) "
-                                  + "values(?,?,?,?,?,?)";
+                                  + "notif(idkomentar, idpost, pengirim, penerima, baca, waktu, pemilik) "
+                                  + "values(?,?,?,?,?,?,?)";
     private final String getAll = "SELECT notif.*, Pengirim.nama AS namaPengirim, "
                                 + "Penerima.nama AS namaPenerima, Pemilik.nama AS namaPemilik "
                                 + "FROM notif "
@@ -86,6 +86,7 @@ public class NotifDao {
             while(rs.next()) {
                 Notif notif = new Notif();
                 notif.setIdNotif(rs.getInt("idnotif"));
+                notif.setIdKomentar(rs.getInt("idkomentar"));
                 notif.setIdPost(rs.getInt("idpost"));
                 notif.setPengirim(rs.getString("pengirim"));
                 notif.setNamaPengirim(rs.getString("namaPengirim"));
@@ -109,12 +110,13 @@ public class NotifDao {
             SimpleDateFormat sdf = new  SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String waktu = sdf.format(date);
             PreparedStatement ps = koneksi.prepareStatement(addNotif);
-            ps.setInt(1, notif.getIdPost());
-            ps.setString(2, notif.getPengirim());
-            ps.setString(3, notif.getPenerima());
-            ps.setString(4, "0");
-            ps.setString(5, waktu);
-            ps.setString(6, notif.getPemilik());
+            ps.setInt(1, notif.getIdKomentar());
+            ps.setInt(2, notif.getIdPost());
+            ps.setString(3, notif.getPengirim());
+            ps.setString(4, notif.getPenerima());
+            ps.setString(5, "0");
+            ps.setString(6, waktu);
+            ps.setString(7, notif.getPemilik());
             ps.executeUpdate();
         } catch(SQLException e) {
             System.out.println(e);

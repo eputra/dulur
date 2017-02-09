@@ -28,8 +28,16 @@ package Model;
  * @author Eka Putra <ekaputtra at gmail.com>
  */
 public class Notif {
-    private int idNotif, idPost;
+    private int idNotif, idPost, idKomentar;
     private String pengirim, namaPengirim, penerima, namaPenerima, pemilik, namaPemilik, baca, waktu;
+
+    public int getIdKomentar() {
+        return idKomentar;
+    }
+
+    public void setIdKomentar(int idKomentar) {
+        this.idKomentar = idKomentar;
+    }
 
     public int getIdNotif() {
         return idNotif;

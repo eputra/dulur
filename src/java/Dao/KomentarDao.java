@@ -29,6 +29,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
@@ -103,22 +104,27 @@ public class KomentarDao {
     }
     
     public int save(Komentar komentar) {
-        int status = 0;
+        int idkomentar = 0;
         try {
             Date date = new Date();
             SimpleDateFormat sdf = new  SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String waktu = sdf.format(date);
-            PreparedStatement ps = koneksi.prepareStatement(save);
+            
+            PreparedStatement ps = koneksi.prepareStatement(save, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, komentar.getIdpost());
             ps.setString(2, komentar.getIduser());
             ps.setString(3, komentar.getKomentar());
             ps.setString(4, waktu);
-            status = ps.executeUpdate();
+            ps.executeUpdate();
             
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                idkomentar = rs.getInt(1);
+            }
         } catch(SQLException e) {
             System.out.println(e);
         }
-        return status;
+        return idkomentar;
     }
     
     public List<Komentar> getAll(int idpost) {

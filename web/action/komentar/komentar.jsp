@@ -13,8 +13,8 @@ komentar.setIduser(session.getAttribute("iduser").toString());
 komentar.setIdpost(k.getIdpost());
 komentar.setKomentar(k.getKomentar());
 KomentarDao komentarDao = new KomentarDao();
-int status = komentarDao.save(komentar);
-if (status == 0) {
+int idkomentar = komentarDao.save(komentar);
+if (idkomentar == 0) {
     session.setAttribute("addComErr", "Komentar gagal ditambah.");
 } else {
     PostDao postDao = new PostDao();
@@ -32,6 +32,7 @@ if (status == 0) {
             if(!post.getIduser().equals(iduserList.getIduser())) {
                 NotifDao notifDao = new NotifDao();
                 Notif notif = new Notif();
+                notif.setIdKomentar(idkomentar);
                 notif.setIdPost(post.getIdpost());
                 notif.setPengirim(session.getAttribute("iduser").toString());
                 notif.setPenerima(iduserList.getIduser());
@@ -41,6 +42,7 @@ if (status == 0) {
         } else if(!post.getIduser().equals(iduserList.getIduser())) {
             NotifDao notifDao = new NotifDao();
             Notif notif = new Notif();
+            notif.setIdKomentar(idkomentar);
             notif.setIdPost(post.getIdpost());
             notif.setPengirim(session.getAttribute("iduser").toString());
             notif.setPenerima(post.getIduser());
