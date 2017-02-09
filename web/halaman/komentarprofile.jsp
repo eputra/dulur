@@ -19,7 +19,7 @@ post = postDao.getById(idpost);
     
     <div class="komentar">
         <div class="kepala">
-            <a href="index.jsp?folder=halaman&file=profile&iduser=<%=post.getIduser()%>"><%=post.getNama()%></a>
+            <a href="index.jsp?folder=halaman&amp;file=profile&amp;iduser=<%=post.getIduser()%>"><%=post.getNama()%></a>
             <span class="iduser">@<%=post.getIduser()%></span>
             <%
             if(pageContext.getAttribute("iduser-post").equals(session.getAttribute("iduser"))) {
@@ -29,7 +29,7 @@ post = postDao.getById(idpost);
                         <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-left">
-                        <li><a href="index.jsp?folder=halaman&file=editpostprofile&idpost=<%=idpost%>">Edit</a></li>
+                        <li><a href="index.jsp?folder=halaman&amp;file=editpostprofile&amp;idpost=<%=idpost%>">Edit</a></li>
                         <li><a href="#" onclick="conDelPostPro(<%=idpost%>)">Delete</a>
                     </ul>
                 </span>
@@ -38,7 +38,7 @@ post = postDao.getById(idpost);
                         <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a href="index.jsp?folder=halaman&file=editpostprofile&idpost=<%=idpost%>">Edit</a></li>
+                        <li><a href="index.jsp?folder=halaman&amp;file=editpostprofile&amp;idpost=<%=idpost%>">Edit</a></li>
                         <li><a href="#" onclick="conDelPostPro(<%=idpost%>)">Delete</a>
                     </ul>
                 </span>
@@ -60,7 +60,7 @@ post = postDao.getById(idpost);
             <c:set var="iduser-kom" value="${data.getIduser()}"/>
             <hr>
             <div class="kepala">
-                <a href="index.jsp?folder=halaman&file=profile&iduser=${data.getIduser()}">${data.getNama()}</a>
+                <a href="index.jsp?folder=halaman&amp;file=profile&amp;iduser=${data.getIduser()}">${data.getNama()}</a>
                 <span class="iduser">@${data.getIduser()}</span>
                 <%
                 if(pageContext.getAttribute("iduser-kom").equals(session.getAttribute("iduser"))) {
@@ -70,7 +70,7 @@ post = postDao.getById(idpost);
                             <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-left">
-                            <li><a href="index.jsp?folder=halaman&file=editkomentarprofile&idkomentar=${data.getIdkomentar()}">Edit</a></li>
+                            <li><a href="index.jsp?folder=halaman&amp;file=editkomentarprofile&amp;idkomentar=${data.getIdkomentar()}">Edit</a></li>
                             <li><a href="#" onclick="conDelComPro(${data.getIdkomentar()}, ${data.getIdpost()})">Delete</a>
                         </ul>
                     </span>
@@ -79,7 +79,7 @@ post = postDao.getById(idpost);
                             <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right">
-                            <li><a href="index.jsp?folder=halaman&file=editkomentarprofile&idkomentar=${data.getIdkomentar()}">Edit</a></li>
+                            <li><a href="index.jsp?folder=halaman&amp;file=editkomentarprofile&amp;idkomentar=${data.getIdkomentar()}">Edit</a></li>
                             <li><a href="#" onclick="conDelComPro(${data.getIdkomentar()}, ${data.getIdpost()})">Delete</a>
                         </ul>
                     </span>

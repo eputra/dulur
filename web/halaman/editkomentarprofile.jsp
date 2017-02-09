@@ -13,7 +13,7 @@ kom = komDao.getById(Integer.parseInt(request.getParameter("idkomentar")));
 <div class="container">
     <div class="komentar">
         <div class="kepala">
-            <a href="index.jsp?folder=halaman&file=profile&iduser=<%=kom.getIduser()%>">
+            <a href="index.jsp?folder=halaman&amp;file=profile&amp;iduser=<%=kom.getIduser()%>">
                 <%=kom.getNama()%>
             </a>
             <span class="iduser">@<%=kom.getIduser()%></span>

@@ -28,11 +28,11 @@ request.setAttribute("notifList", notifList);
                 <c:set var="penerima" value="${data.getPenerima()}"/>
                 <c:set var="pemilik" value="${data.getPemilik()}"/>
                 <hr>
-                <a href="index.jsp?folder=halaman&file=profile&iduser=${data.getPengirim()}">
+                <a href="index.jsp?folder=halaman&amp;file=profile&amp;iduser=${data.getPengirim()}">
                     ${data.getNamaPengirim()} 
                 </a>
                 <span class="iduser">@${data.getPengirim()}</span> berkomentar di
-                <a href="action/notif/baca.jsp?idpost=${data.getIdPost()}&idnotif=${data.getIdNotif()}">status</a>
+                <a href="action/notif/baca.jsp?idpost=${data.getIdPost()}&amp;idnotif=${data.getIdNotif()}">status</a>
                 <%
                 if(pageContext.getAttribute("pemilik").equals(pageContext.getAttribute("pengirim"))) {
                     out.println("Nya.");
@@ -40,7 +40,7 @@ request.setAttribute("notifList", notifList);
                     out.println("Anda.");
                 } else {
                     %>
-                    <a href="index.jsp?folder=halaman&file=profile&iduser=${data.getPemilik()}">
+                    <a href="index.jsp?folder=halaman&amp;file=profile&amp;iduser=${data.getPemilik()}">
                         ${data.getNamaPemilik()} 
                     </a>
                     <span class="iduser">@${data.getPemilik()}.</span>

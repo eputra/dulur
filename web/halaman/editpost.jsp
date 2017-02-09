@@ -15,7 +15,7 @@ post = postDao.getById(Integer.parseInt(idpost));
 <div class="container">
     <div class="komentar">
         <div class="kepala">
-            <a href="index.jsp?folder=halaman&file=profile&iduser=<%=post.getIduser()%>">
+            <a href="index.jsp?folder=halaman&amp;file=profile&amp;iduser=<%=post.getIduser()%>">
                 <%=post.getNama()%>
             </a>
             <span class="iduser">@<%=post.getIduser()%></span>

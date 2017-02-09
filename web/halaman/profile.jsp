@@ -56,7 +56,7 @@
                     <c:set var="iduser" value="${data.getIduser()}"/>
                     <div class="konten">
                         <div class="kepala">
-                            <a href="index.jsp?folder=halaman&file=profile&iduser=${data.getIduser()}">${data.getNama()}</a>
+                            <a href="index.jsp?folder=halaman&amp;file=profile&amp;iduser=${data.getIduser()}">${data.getNama()}</a>
                             <span class="iduser">@${data.getIduser()}</span>
                             <%
                             if(pageContext.getAttribute("iduser").equals(session.getAttribute("iduser"))) {
@@ -66,7 +66,7 @@
                                         <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-left">
-                                        <li><a href="index.jsp?folder=halaman&file=editpostprofile&idpost=${data.getIdpost()}">Edit</a></li>
+                                        <li><a href="index.jsp?folder=halaman&amp;file=editpostprofile&amp;idpost=${data.getIdpost()}">Edit</a></li>
                                         <li><a href="#" onclick="conDelPostPro(${data.getIdpost()})">Delete</a>
                                     </ul>
                                 </span>
@@ -75,7 +75,7 @@
                                         <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-right">
-                                        <li><a href="index.jsp?folder=halaman&file=editpostprofile&idpost=${data.getIdpost()}">Edit</a></li>
+                                        <li><a href="index.jsp?folder=halaman&amp;file=editpostprofile&amp;idpost=${data.getIdpost()}">Edit</a></li>
                                         <li><a href="#" onclick="conDelPostPro(${data.getIdpost()})">Delete</a>
                                     </ul>
                                 </span>
@@ -84,7 +84,7 @@
                             %>
                         </div>
                         <p>${data.getPost()}</p>
-                        <a href="index.jsp?folder=halaman&file=komentarprofile&idpost=${data.getIdpost()}">${data.getJmlkomentar()} Komentar</a>
+                        <a href="index.jsp?folder=halaman&amp;file=komentarprofile&amp;idpost=${data.getIdpost()}">${data.getJmlkomentar()} Komentar</a>
                     </div>
                 </c:forEach>
             <%

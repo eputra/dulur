@@ -41,18 +41,18 @@ int jumlahNotif = notifDao.getJmlnotif(iduser);
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.jsp?folder=halaman&file=home">Dulur</a>
+            <a class="navbar-brand" href="index.jsp?folder=halaman&amp;file=home">Dulur</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li class="<%if(hal.equals("home")){out.print("aktif");}%>">
-                    <a href="index.jsp?folder=halaman&file=home">
+                    <a href="index.jsp?folder=halaman&amp;file=home">
                         <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                         <span class="visible-xs-inline">Home</span>
                     </a>
                 </li>
                 <li class="<%if(hal.equals("pemberitahuan")){out.print("aktif");}%>">
-                    <a href="index.jsp?folder=halaman&file=pemberitahuan">
+                    <a href="index.jsp?folder=halaman&amp;file=pemberitahuan">
                         <%
                         if(jumlahNotif > 0) {
                             %>
@@ -76,7 +76,7 @@ int jumlahNotif = notifDao.getJmlnotif(iduser);
                     </a>
                 </li>
                 <li class="<%if(hal.equals("profile")){out.print("aktif");}%>">
-                    <a href="index.jsp?folder=halaman&file=profile&iduser=<%=iduser%>">
+                    <a href="index.jsp?folder=halaman&amp;file=profile&amp;iduser=<%=iduser%>">
                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                         <span class="visible-xs-inline">Profile</span>
                     </a>
