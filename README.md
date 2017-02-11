@@ -2,8 +2,6 @@
 
 Aplikasi Dulur ini merupakan aplikasi social media yang sangat sederhana, yang dibuat untuk memenuhi tugas Bahasa Pemrograman 3. Fiturnya sendiri hanya sign up, sign in, menampilkan kabar, menambah kabar, mengubah kabar, menghapus kabar, menampilkan komentar, menambah komentar, mengubah komentar, menghapus komentar, menampilkan notifikasi, dan sign out.
 
-Untuk masalah keamanan akun user belum tersimpan dengan baik oleh aplikasi Dulur ini, karena password user yang tersimpan di database tidak dienkripsi.
-
 Jika ada kritik atau saran agar aplikasi Dulur ini bisa menjadi lebih baik, silahkan open issues atau pull request.
 
 ## Database

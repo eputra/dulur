@@ -31,6 +31,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.jasypt.util.password.BasicPasswordEncryptor;
 /**
  *
  * @author Eka Putra <ekaputtra at gmail.com>
@@ -39,7 +40,7 @@ public class UserDao {
     private final Connection koneksi = new Koneksi().getKoneksi();
     private final String getAll = "select * from user";
     private final String save = "insert into user(iduser, nama, password) values(?,?,?)";
-    private final String validate = "select * from user WHERE iduser=? AND password=?";
+    private final String validate = "select user.password from user WHERE iduser=?";
     private final String getById = "select * from user where iduser=?";
     private final String getUserPost = "SELECT iduser FROM komentar WHERE idpost=? GROUP BY iduser";
     private final String cekById = "SELECT COUNT(iduser) FROM user WHERE iduser=?";
@@ -114,10 +115,13 @@ public class UserDao {
     public int save(User user) {
         int status = 0;
         try {
+            BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
+            String encryptedPassword = passwordEncryptor.encryptPassword(user.getPassword());
+            
             PreparedStatement ps = koneksi.prepareStatement(save);
             ps.setString(1, user.getIduser());
             ps.setString(2, user.getNama());
-            ps.setString(3, user.getPassword());
+            ps.setString(3, encryptedPassword);
             status = ps.executeUpdate();
         } catch(SQLException e) {
             System.out.println(e);
@@ -130,18 +134,16 @@ public class UserDao {
         try {
             PreparedStatement ps = koneksi.prepareStatement(validate);
             ps.setString(1, user.getIduser());
-            ps.setString(2, user.getPassword());
             ResultSet rs = ps.executeQuery();
-            status = rs.next();
+            if (rs.next()) {
+                BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
+                if (passwordEncryptor.checkPassword(user.getPassword(), rs.getString("password"))) {
+                    status = true;
+                }
+            }
         } catch (SQLException e) {
             System.out.println(e);
         }
         return status;
-    }
-    
-    public static void main(String[] args) {
-        UserDao ud = new UserDao();
-        int status = ud.cekById("ek");
-        System.out.println(status);
     }
 }
