@@ -40,26 +40,12 @@ import java.text.SimpleDateFormat;
  * @author Eka Putra <ekaputtra at gmail.com>
  */
 public class KomentarDao {
-    private final Connection koneksi = new Koneksi().getKoneksi();
-    private final String save = "INSERT INTO komentar(idpost, iduser, komentar, waktu) values(?, ?, ?, ?)";
-    private final String getAll = "SELECT user.iduser, user.nama, komentar.idkomentar, komentar.komentar, post.idpost "
-                                + "FROM komentar "
-                                + "INNER JOIN user ON user.iduser=komentar.iduser "
-                                + "INNER JOIN post ON post.idpost=komentar.idpost "
-                                + "WHERE post.idpost=? "
-                                + "ORDER BY komentar.waktu ASC";
-    private final String getById = "SELECT user.iduser, user.nama, "
-                                 + "komentar.idkomentar, komentar.idpost, komentar.komentar "
-                                 + "FROM komentar "
-                                 + "INNER JOIN user ON user.iduser=komentar.iduser "
-                                 + "WHERE komentar.idkomentar=?";
-    private final String edit = "UPDATE komentar SET komentar=? WHERE idkomentar=? AND iduser=?";
-    private final String delete = "DELETE FROM komentar WHERE idkomentar=? AND iduser=?";
-    
     public int delete(Komentar kom) {
+        final Connection koneksi = new Koneksi().getKoneksi();
+        final String query = "DELETE FROM komentar WHERE idkomentar=? AND iduser=?";
         int status = 0;
         try {
-            PreparedStatement ps = koneksi.prepareStatement(delete);
+            PreparedStatement ps = koneksi.prepareStatement(query);
             ps.setInt(1, kom.getIdkomentar());
             ps.setString(2, kom.getIduser());
             status = ps.executeUpdate();
@@ -70,9 +56,11 @@ public class KomentarDao {
     }
     
     public int edit(Komentar kom) {
+        final Connection koneksi = new Koneksi().getKoneksi();
+        final String query = "UPDATE komentar SET komentar=? WHERE idkomentar=? AND iduser=?";
         int status = 0;
         try {
-            PreparedStatement ps = koneksi.prepareStatement(edit);
+            PreparedStatement ps = koneksi.prepareStatement(query);
             ps.setString(1, kom.getKomentar());
             ps.setInt(2, kom.getIdkomentar());
             ps.setString(3, kom.getIduser());
@@ -84,9 +72,15 @@ public class KomentarDao {
     }
     
     public Komentar getById(int idkomentar) {
+        final Connection koneksi = new Koneksi().getKoneksi();
+        final String query = "SELECT user.iduser, user.nama, "
+                           + "komentar.idkomentar, komentar.idpost, komentar.komentar "
+                           + "FROM komentar "
+                           + "INNER JOIN user ON user.iduser=komentar.iduser "
+                           + "WHERE komentar.idkomentar=?";
         Komentar kom = null;
         try {
-            PreparedStatement ps = koneksi.prepareStatement(getById);
+            PreparedStatement ps = koneksi.prepareStatement(query);
             ps.setInt(1, idkomentar);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
@@ -104,13 +98,14 @@ public class KomentarDao {
     }
     
     public int save(Komentar komentar) {
+        final Connection koneksi = new Koneksi().getKoneksi();
+        final String query = "INSERT INTO komentar(idpost, iduser, komentar, waktu) values(?, ?, ?, ?)";
         int idkomentar = 0;
         try {
             Date date = new Date();
             SimpleDateFormat sdf = new  SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String waktu = sdf.format(date);
-            
-            PreparedStatement ps = koneksi.prepareStatement(save, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = koneksi.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, komentar.getIdpost());
             ps.setString(2, komentar.getIduser());
             ps.setString(3, komentar.getKomentar());
@@ -128,9 +123,16 @@ public class KomentarDao {
     }
     
     public List<Komentar> getAll(int idpost) {
+        final Connection koneksi = new Koneksi().getKoneksi();
+        final String query = "SELECT user.iduser, user.nama, komentar.idkomentar, komentar.komentar, post.idpost "
+                           + "FROM komentar "
+                           + "INNER JOIN user ON user.iduser=komentar.iduser "
+                           + "INNER JOIN post ON post.idpost=komentar.idpost "
+                           + "WHERE post.idpost=? "
+                           + "ORDER BY komentar.waktu ASC";
         List<Komentar> komList = new ArrayList<Komentar>();
         try {
-            PreparedStatement ps = koneksi.prepareStatement(getAll);
+            PreparedStatement ps = koneksi.prepareStatement(query);
             ps.setInt(1, idpost);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
@@ -146,25 +148,5 @@ public class KomentarDao {
             System.out.println(e);
         }
         return komList;
-    }
-    
-    public static void main(String[] args) {
-//        KomentarDao kd = new KomentarDao();
-//        Komentar k = new Komentar();
-//        k.setKomentar("Coba jj");
-//        k.setIdkomentar(3);
-//        k.setIduser("eka");
-//        int status = kd.edit(k);
-//        if (status == 0) {
-//            System.out.println("Gagal");
-//        } else {
-//            System.out.println("Berhasil");
-//        }
-        KomentarDao kd = new KomentarDao();
-        List<Komentar> k = new ArrayList<Komentar>();
-        k = kd.getAll(82);
-        for (Komentar data: k) {
-            System.out.println(data);
-        }
     }
 }

@@ -39,23 +39,11 @@ import java.util.List;
  * @author Eka Putra <ekaputtra at gmail.com>
  */
 public class NotifDao {
-    private Connection koneksi = new Koneksi().getKoneksi();
-    private final String addNotif = "INSERT INTO "
-                                  + "notif(idkomentar, idpost, pengirim, penerima, baca, waktu, pemilik) "
-                                  + "values(?,?,?,?,?,?,?)";
-    private final String getAll = "SELECT notif.*, Pengirim.nama AS namaPengirim, "
-                                + "Penerima.nama AS namaPenerima, Pemilik.nama AS namaPemilik "
-                                + "FROM notif "
-                                + "LEFT JOIN user AS Pengirim ON notif.pengirim=Pengirim.iduser "
-                                + "LEFT JOIN user AS Penerima ON notif.penerima=Penerima.iduser "
-                                + "LEFT JOIN user AS Pemilik ON notif.pemilik=Pemilik.iduser "
-                                + "WHERE penerima=? AND baca=0 ORDER BY waktu ASC";
-    private final String getJmlnotif = "SELECT COUNT(idnotif) FROM notif WHERE penerima=? AND baca=0";
-    private final String subNotif = "UPDATE notif SET baca=1 WHERE idnotif=?";
-    
     public void subNotif(int idnotif) {
+        final Connection koneksi = new Koneksi().getKoneksi();
+        final String query = "UPDATE notif SET baca=1 WHERE idnotif=?";
         try {
-            PreparedStatement ps = koneksi.prepareStatement(subNotif);
+            PreparedStatement ps = koneksi.prepareStatement(query);
             ps.setInt(1, idnotif);
             ps.executeUpdate();
         } catch(SQLException e) {
@@ -64,9 +52,11 @@ public class NotifDao {
     }
     
     public int getJmlnotif(String penerima) {
+        final Connection koneksi = new Koneksi().getKoneksi();
+        final String query = "SELECT COUNT(idnotif) FROM notif WHERE penerima=? AND baca=0";
         int jumlah = 0;
         try {
-            PreparedStatement ps = koneksi.prepareStatement(getJmlnotif);
+            PreparedStatement ps = koneksi.prepareStatement(query);
             ps.setString(1, penerima);
             ResultSet rs = ps.executeQuery();
             rs.next();
@@ -78,9 +68,17 @@ public class NotifDao {
     }
     
     public List<Notif> getAll(String penerima) {
+        final Connection koneksi = new Koneksi().getKoneksi();
+        final String query = "SELECT notif.*, Pengirim.nama AS namaPengirim, "
+                           + "Penerima.nama AS namaPenerima, Pemilik.nama AS namaPemilik "
+                           + "FROM notif "
+                           + "LEFT JOIN user AS Pengirim ON notif.pengirim=Pengirim.iduser "
+                           + "LEFT JOIN user AS Penerima ON notif.penerima=Penerima.iduser "
+                           + "LEFT JOIN user AS Pemilik ON notif.pemilik=Pemilik.iduser "
+                           + "WHERE penerima=? AND baca=0 ORDER BY waktu ASC";
         List<Notif> notifList = new ArrayList<Notif>();
         try {
-            PreparedStatement ps = koneksi.prepareStatement(getAll);
+            PreparedStatement ps = koneksi.prepareStatement(query);
             ps.setString(1, penerima);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
@@ -105,11 +103,15 @@ public class NotifDao {
     }
     
     public void addNotif(Notif notif) {
+        final Connection koneksi = new Koneksi().getKoneksi();
+        final String query = "INSERT INTO "
+                           + "notif(idkomentar, idpost, pengirim, penerima, baca, waktu, pemilik) "
+                           + "values(?,?,?,?,?,?,?)";
         try {
             Date date = new Date();
             SimpleDateFormat sdf = new  SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String waktu = sdf.format(date);
-            PreparedStatement ps = koneksi.prepareStatement(addNotif);
+            PreparedStatement ps = koneksi.prepareStatement(query);
             ps.setInt(1, notif.getIdKomentar());
             ps.setInt(2, notif.getIdPost());
             ps.setString(3, notif.getPengirim());
@@ -120,18 +122,6 @@ public class NotifDao {
             ps.executeUpdate();
         } catch(SQLException e) {
             System.out.println(e);
-        }
-    }
-    
-    public static void main(String[] args) {
-//        NotifDao nd = new NotifDao();
-//        nd.subNotif(2);
-        
-        NotifDao nd = new NotifDao();
-        List<Notif> n = new ArrayList<Notif>();
-        n = nd.getAll("eka");
-        for (Notif data: n) {
-            System.out.println(data);
         }
     }
 }

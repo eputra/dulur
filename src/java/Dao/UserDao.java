@@ -37,18 +37,12 @@ import org.jasypt.util.password.BasicPasswordEncryptor;
  * @author Eka Putra <ekaputtra at gmail.com>
  */
 public class UserDao {
-    private final Connection koneksi = new Koneksi().getKoneksi();
-    private final String getAll = "select * from user";
-    private final String save = "insert into user(iduser, nama, password) values(?,?,?)";
-    private final String validate = "select user.password from user WHERE iduser=?";
-    private final String getById = "select * from user where iduser=?";
-    private final String getUserPost = "SELECT iduser FROM komentar WHERE idpost=? GROUP BY iduser";
-    private final String cekById = "SELECT COUNT(iduser) FROM user WHERE iduser=?";
-    
     public List<User> getUserPost(int idpost) {
+        final Connection koneksi = new Koneksi().getKoneksi();
+        final String query = "SELECT iduser FROM komentar WHERE idpost=? GROUP BY iduser";
         List<User> userList = new ArrayList<User>();
         try {
-            PreparedStatement ps = koneksi.prepareStatement(getUserPost);
+            PreparedStatement ps = koneksi.prepareStatement(query);
             ps.setInt(1, idpost);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
@@ -63,9 +57,11 @@ public class UserDao {
     }
     
     public User getById(String iduser) {
+        final Connection koneksi = new Koneksi().getKoneksi();
+        final String query = "select * from user where iduser=?";
         User user = new User();
         try {
-            PreparedStatement ps = koneksi.prepareStatement(getById);
+            PreparedStatement ps = koneksi.prepareStatement(query);
             ps.setString(1, iduser);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
@@ -80,9 +76,11 @@ public class UserDao {
     }
     
     public int cekById(String iduser) {
+        final Connection koneksi = new Koneksi().getKoneksi();
+        final String query = "SELECT COUNT(iduser) FROM user WHERE iduser=?";
         int status = 0;
         try {
-            PreparedStatement ps = koneksi.prepareStatement(cekById);
+            PreparedStatement ps = koneksi.prepareStatement(query);
             ps.setString(1, iduser);
             ResultSet rs = ps.executeQuery();
             rs.next();
@@ -94,10 +92,13 @@ public class UserDao {
     }
     
     public List<User> getAll() {
+        final Connection koneksi = new Koneksi().getKoneksi();
+        final String query = "select * from user";
+        
         List<User> userList = new ArrayList<User>();
         
         try {
-            PreparedStatement ps = koneksi.prepareStatement(getAll);
+            PreparedStatement ps = koneksi.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
                 User user = new User();
@@ -113,12 +114,13 @@ public class UserDao {
     }
     
     public int save(User user) {
+        final Connection koneksi = new Koneksi().getKoneksi();
+        final String query = "insert into user(iduser, nama, password) values(?,?,?)";
         int status = 0;
         try {
             BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
             String encryptedPassword = passwordEncryptor.encryptPassword(user.getPassword());
-            
-            PreparedStatement ps = koneksi.prepareStatement(save);
+            PreparedStatement ps = koneksi.prepareStatement(query);
             ps.setString(1, user.getIduser());
             ps.setString(2, user.getNama());
             ps.setString(3, encryptedPassword);
@@ -130,9 +132,11 @@ public class UserDao {
     }
     
     public boolean validate(User user) {
+        final Connection koneksi = new Koneksi().getKoneksi();
+        final String query = "select user.password from user WHERE iduser=?";
         boolean status = false;
         try {
-            PreparedStatement ps = koneksi.prepareStatement(validate);
+            PreparedStatement ps = koneksi.prepareStatement(query);
             ps.setString(1, user.getIduser());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {

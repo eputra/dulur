@@ -39,27 +39,12 @@ import java.text.SimpleDateFormat;
  * @author Eka Putra <ekaputtra at gmail.com>
  */
 public class PostDao {
-    private final Connection koneksi = new Koneksi().getKoneksi();
-    private final String save = "insert into post(iduser, post, waktu, jmlkomentar) values(?,?,?,?)";
-    private final String getAll = "SELECT user.iduser, user.nama, post.idpost, post.post, post.jmlkomentar "
-                                + "FROM user INNER JOIN post ON user.iduser=post.iduser "
-                                + "ORDER BY post.waktu DESC";
-    private final String getById = "SELECT user.iduser, user.nama, post.idpost, post.post, post.jmlkomentar "
-                                 + "FROM user INNER JOIN post ON user.iduser=post.iduser "
-                                 + "WHERE idpost=?";
-    private final String getByUser = "SELECT user.iduser, user.nama, post.idpost, post.post, post.jmlkomentar "
-                                   + "FROM user INNER JOIN post ON user.iduser=post.iduser "
-                                   + "WHERE post.iduser=? ORDER BY post.waktu DESC";
-    private final String edit = "UPDATE post SET post=? WHERE idpost=? AND iduser=?";
-    private final String delete = "DELETE FROM post WHERE idpost=? AND iduser=?";
-    private final String addJmlKomentar = "UPDATE post SET jmlkomentar=jmlkomentar+1 WHERE idpost=?";
-    private final String subJmlKomentar = "UPDATE post SET jmlkomentar=jmlkomentar-1 WHERE idpost=?";
-    private final String cekByUser = "SELECT COUNT(idpost) FROM post WHERE iduser=?";
-    
     public int cekByUser(String iduser) {
+        final Connection koneksi = new Koneksi().getKoneksi();
+        final String query = "SELECT COUNT(idpost) FROM post WHERE iduser=?";
         int status = 0;
         try {
-            PreparedStatement ps = koneksi.prepareStatement(cekByUser);
+            PreparedStatement ps = koneksi.prepareStatement(query);
             ps.setString(1, iduser);
             ResultSet rs = ps.executeQuery();
             rs.next();
@@ -71,8 +56,10 @@ public class PostDao {
     }
     
     public void subJmlKomentar(int idpost) {
+        final Connection koneksi = new Koneksi().getKoneksi();
+        final String query = "UPDATE post SET jmlkomentar=jmlkomentar-1 WHERE idpost=?";
         try {
-            PreparedStatement ps = koneksi.prepareStatement(subJmlKomentar);
+            PreparedStatement ps = koneksi.prepareStatement(query);
             ps.setInt(1, idpost);
             ps.executeUpdate();
         } catch(SQLException e) {
@@ -81,8 +68,10 @@ public class PostDao {
     }
     
     public void addJmlKomentar(int idpost) {
+        final Connection koneksi = new Koneksi().getKoneksi();
+        final String query = "UPDATE post SET jmlkomentar=jmlkomentar+1 WHERE idpost=?";
         try {
-            PreparedStatement ps = koneksi.prepareStatement(addJmlKomentar);
+            PreparedStatement ps = koneksi.prepareStatement(query);
             ps.setInt(1, idpost);
             ps.executeUpdate();
         } catch(SQLException e) {
@@ -91,9 +80,11 @@ public class PostDao {
     }
     
     public int delete(Post post) {
+        final Connection koneksi = new Koneksi().getKoneksi();
+        final String query = "DELETE FROM post WHERE idpost=? AND iduser=?";
         int status = 0;
         try {
-            PreparedStatement ps = koneksi.prepareStatement(delete);
+            PreparedStatement ps = koneksi.prepareStatement(query);
             ps.setInt(1, post.getIdpost());
             ps.setString(2, post.getIduser());
             status = ps.executeUpdate();
@@ -104,9 +95,11 @@ public class PostDao {
     }
     
     public int edit(Post post) {
+        final Connection koneksi = new Koneksi().getKoneksi();
+        final String query = "UPDATE post SET post=? WHERE idpost=? AND iduser=?";
         int status = 0;
         try {
-            PreparedStatement ps = koneksi.prepareStatement(edit);
+            PreparedStatement ps = koneksi.prepareStatement(query);
             ps.setString(1, post.getPost());
             ps.setInt(2, post.getIdpost());
             ps.setString(3, post.getIduser());
@@ -118,12 +111,14 @@ public class PostDao {
     }
     
     public int save(Post post) {
+        final Connection koneksi = new Koneksi().getKoneksi();
+        final String query = "insert into post(iduser, post, waktu, jmlkomentar) values(?,?,?,?)";
         int status = 0;
         try {
             Date date = new Date();
             SimpleDateFormat sdf = new  SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String waktu = sdf.format(date);
-            PreparedStatement ps = koneksi.prepareStatement(save);
+            PreparedStatement ps = koneksi.prepareStatement(query);
             ps.setString(1, post.getIduser());
             ps.setString(2, post.getPost());
             ps.setString(3, waktu);
@@ -136,9 +131,13 @@ public class PostDao {
     }
     
     public Post getById(int idpost) {
+        final Connection koneksi = new Koneksi().getKoneksi();
+        final String query = "SELECT user.iduser, user.nama, post.idpost, post.post, post.jmlkomentar "
+                           + "FROM user INNER JOIN post ON user.iduser=post.iduser "
+                           + "WHERE idpost=?";
         Post post = null;
         try {
-            PreparedStatement ps = koneksi.prepareStatement(getById);
+            PreparedStatement ps = koneksi.prepareStatement(query);
             ps.setInt(1, idpost);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
@@ -156,10 +155,13 @@ public class PostDao {
     }
     
     public List<Post> getAll() {
+        final Connection koneksi = new Koneksi().getKoneksi();
+        final String query = "SELECT user.iduser, user.nama, post.idpost, post.post, post.jmlkomentar "
+                           + "FROM user INNER JOIN post ON user.iduser=post.iduser "
+                           + "ORDER BY post.waktu DESC";
         List<Post> postList = new ArrayList<Post>();
-        
         try {
-            PreparedStatement ps = koneksi.prepareStatement(getAll);
+            PreparedStatement ps = koneksi.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
                 Post post = new Post();
@@ -177,10 +179,13 @@ public class PostDao {
     }
     
     public List<Post> getByUser(String iduser) {
+        final Connection koneksi = new Koneksi().getKoneksi();
+        final String query = "SELECT user.iduser, user.nama, post.idpost, post.post, post.jmlkomentar "
+                           + "FROM user INNER JOIN post ON user.iduser=post.iduser "
+                           + "WHERE post.iduser=? ORDER BY post.waktu DESC";
         List<Post> postList = new ArrayList<Post>();
-        
         try {
-            PreparedStatement ps = koneksi.prepareStatement(getByUser);
+            PreparedStatement ps = koneksi.prepareStatement(query);
             ps.setString(1, iduser);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
@@ -196,14 +201,5 @@ public class PostDao {
             System.out.println(e);
         }
         return postList;
-    }
-    
-    public static void main(String[] args) {
-        PostDao pd = new PostDao();
-        List<Post> p = new ArrayList<Post>();
-        p = pd.getAll();
-        for (Post data: p) {
-            System.out.println(data);
-        }
     }
 }
